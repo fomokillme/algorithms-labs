@@ -18,33 +18,34 @@ public class MergeSort implements Sorting<Integer> {
     }
 
     private void merge(List<Integer> nums, int start, int middle, int end) {
-        List<Integer> temp = new ArrayList<>();
+        List<Integer> left = new ArrayList<>(nums.subList(start, middle + 1));
+        List<Integer> right = new ArrayList<>(nums.subList(middle + 1, end + 1));
 
-        int left = start;
-        int right = middle + 1;
+        int i = 0;
+        int j = 0;
+        int k = start;
 
-        while (left <= middle && right <= end) {
-            if (nums.get(left) <= nums.get(right)) {
-                temp.add(nums.get(left));
-                left++;
+        while (i < left.size() && j < right.size()) {
+            if (left.get(i) <= right.get(j)) {
+                nums.set(k, left.get(i));
+                i++;
             } else {
-                temp.add(nums.get(right));
-                right++;
+                nums.set(k, right.get(j));
+                j++;
             }
+            k++;
         }
 
-        while (left <= middle) {
-            temp.add(nums.get(left));
-            left++;
+        while (i < left.size()) {
+            nums.set(k, left.get(i));
+            i++;
+            k++;
         }
 
-        while (right <= end) {
-            temp.add(nums.get(right));
-            right++;
-        }
-
-        for (int i = 0; i < temp.size(); i++) {
-            nums.set(start + i, temp.get(i));
+        while (j < right.size()) {
+            nums.set(k, right.get(j));
+            j++;
+            k++;
         }
     }
 
